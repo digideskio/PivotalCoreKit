@@ -7,6 +7,9 @@
 + (NSArray *)connections;
 + (void)resetAll;
 
+// This allows making a real http request (used for capturing responses)
+- (id)realInitWithRequest:(NSURLRequest *)request delegate:(id)delegate startImmediately:(BOOL)startImmediately;
+
 - (NSURLRequest *)request;
 - (id)delegate;
 

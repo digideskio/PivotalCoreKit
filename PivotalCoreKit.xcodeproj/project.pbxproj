@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0FDF3B93146FEFE200C9CCD5 /* PSHKCapturingHTTPURLResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FDF3B8F146FEFE200C9CCD5 /* PSHKCapturingHTTPURLResponse.h */; };
+		0FDF3B94146FEFE200C9CCD5 /* PSHKCapturingHTTPURLResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FDF3B90146FEFE200C9CCD5 /* PSHKCapturingHTTPURLResponse.m */; };
+		0FDF3B95146FEFE200C9CCD5 /* PSHKCapturingHTTPURLResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FDF3B90146FEFE200C9CCD5 /* PSHKCapturingHTTPURLResponse.m */; };
+		0FDF3B96146FEFE200C9CCD5 /* PSHKHTTPOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FDF3B91146FEFE200C9CCD5 /* PSHKHTTPOperation.h */; };
+		0FDF3B97146FEFE200C9CCD5 /* PSHKHTTPOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FDF3B92146FEFE200C9CCD5 /* PSHKHTTPOperation.m */; };
+		0FDF3B98146FEFE200C9CCD5 /* PSHKHTTPOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FDF3B92146FEFE200C9CCD5 /* PSHKHTTPOperation.m */; };
 		6696DFB91266DE5800111E23 /* UIWebView+Spec.m in Sources */ = {isa = PBXBuildFile; fileRef = 6696DFB81266DE5800111E23 /* UIWebView+Spec.m */; };
 		6696DFC81266DE8500111E23 /* libCedar-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE138A9411E3FFD6004E825D /* libCedar-StaticLib.a */; };
 		6696DFC91266DE8D00111E23 /* libOCMock-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE138A7D11E3FFC7004E825D /* libOCMock-StaticLib.a */; };
@@ -202,6 +208,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0FDF3B8F146FEFE200C9CCD5 /* PSHKCapturingHTTPURLResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSHKCapturingHTTPURLResponse.h; sourceTree = "<group>"; };
+		0FDF3B90146FEFE200C9CCD5 /* PSHKCapturingHTTPURLResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSHKCapturingHTTPURLResponse.m; sourceTree = "<group>"; };
+		0FDF3B91146FEFE200C9CCD5 /* PSHKHTTPOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSHKHTTPOperation.h; sourceTree = "<group>"; };
+		0FDF3B92146FEFE200C9CCD5 /* PSHKHTTPOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSHKHTTPOperation.m; sourceTree = "<group>"; };
 		6696DFB71266DE5800111E23 /* UIWebView+Spec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+Spec.h"; sourceTree = "<group>"; };
 		6696DFB81266DE5800111E23 /* UIWebView+Spec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+Spec.m"; sourceTree = "<group>"; };
 		6696DFC21266DE6C00111E23 /* UISpec.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UISpec.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -604,6 +614,10 @@
 		AEF15AF711C97F68005B4F92 /* Fakes */ = {
 			isa = PBXGroup;
 			children = (
+				0FDF3B8F146FEFE200C9CCD5 /* PSHKCapturingHTTPURLResponse.h */,
+				0FDF3B90146FEFE200C9CCD5 /* PSHKCapturingHTTPURLResponse.m */,
+				0FDF3B91146FEFE200C9CCD5 /* PSHKHTTPOperation.h */,
+				0FDF3B92146FEFE200C9CCD5 /* PSHKHTTPOperation.m */,
 				AEF15B4311C984EB005B4F92 /* PSHKFakeResponses.h */,
 				AEF15B4411C984EB005B4F92 /* PSHKFakeResponses.m */,
 				AEF15AF811C97F95005B4F92 /* PSHKFakeHTTPURLResponse.h */,
@@ -694,6 +708,8 @@
 				AEE6908E1202523700769ADC /* PSHKFixtures.h in Headers */,
 				AE24D5A713816BE300E4420A /* NSObject+Mocking.h in Headers */,
 				AE24D5AC13816D2900E4420A /* MockMethod.h in Headers */,
+				0FDF3B93146FEFE200C9CCD5 /* PSHKCapturingHTTPURLResponse.h in Headers */,
+				0FDF3B96146FEFE200C9CCD5 /* PSHKHTTPOperation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -975,6 +991,8 @@
 				AE24D5A913816BE800E4420A /* NSObject+Mocking.m in Sources */,
 				AE24D5AE13816D2900E4420A /* MockMethod.m in Sources */,
 				AEA94BFE143CD53000C70E89 /* UIImage+Spec.m in Sources */,
+				0FDF3B95146FEFE200C9CCD5 /* PSHKCapturingHTTPURLResponse.m in Sources */,
+				0FDF3B98146FEFE200C9CCD5 /* PSHKHTTPOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1026,6 +1044,8 @@
 				AEE6908F1202523700769ADC /* PSHKFixtures.m in Sources */,
 				AE24D5A813816BE700E4420A /* NSObject+Mocking.m in Sources */,
 				AE24D5AD13816D2900E4420A /* MockMethod.m in Sources */,
+				0FDF3B94146FEFE200C9CCD5 /* PSHKCapturingHTTPURLResponse.m in Sources */,
+				0FDF3B97146FEFE200C9CCD5 /* PSHKHTTPOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

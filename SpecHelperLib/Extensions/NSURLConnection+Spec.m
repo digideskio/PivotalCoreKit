@@ -1,9 +1,16 @@
 #import "NSURLConnection+Spec.h"
 #import "PSHKFakeHTTPURLResponse.h"
+#import "PSHKCapturingHTTPURLResponse.h"
 #import "objc/runtime.h"
 
 static char ASSOCIATED_REQUEST_KEY;
 static char ASSOCIATED_DELEGATE_KEY;
+
+@interface NSURLConnection ()
+
+- (id)specInitWithRequest:(NSURLRequest *)request delegate:(id)delegate startImmediately:(BOOL)startImmediately;
+
+@end
 
 @implementation NSURLConnection (Spec)
 
@@ -15,6 +22,11 @@ static char ASSOCIATED_DELEGATE_KEY;
 static NSMutableArray *connections__;
 + (void)initialize {
     connections__ = [[NSMutableArray alloc] init];
+	
+	// Exchange the original method
+	Method originalMethod = class_getInstanceMethod([self class], @selector(initWithRequest:delegate:startImmediately:));
+	Method newMethod = class_getInstanceMethod([self class], @selector(specInitWithRequest:delegate:startImmediately:));
+	method_exchangeImplementations(originalMethod, newMethod);
 }
 
 + (NSArray *)connections {
@@ -29,7 +41,7 @@ static NSMutableArray *connections__;
     return [self initWithRequest:request delegate:delegate startImmediately:YES];
 }
 
-- (id)initWithRequest:(NSURLRequest *)request delegate:(id)delegate startImmediately:(BOOL)startImmediately {
+- (id)specInitWithRequest:(NSURLRequest *)request delegate:(id)delegate startImmediately:(BOOL)startImmediately {
     if ((self = [super init])) {
         [connections__ addObject:self];
 
@@ -41,6 +53,11 @@ static NSMutableArray *connections__;
         objc_setAssociatedObject(self, &ASSOCIATED_DELEGATE_KEY, delegate, delegateAssociationPolicy);
     }
     return self;
+}
+
+- (id)realInitWithRequest:(NSURLRequest *)request delegate:(id)delegate startImmediately:(BOOL)startImmediately {
+	// Start a real request
+	return [self specInitWithRequest:request delegate:delegate startImmediately:startImmediately];
 }
 
 - (void)dealloc {
@@ -68,12 +85,17 @@ static NSMutableArray *connections__;
 }
 
 - (void)receiveResponse:(PSHKFakeHTTPURLResponse *)response {
+	if ([response isKindOfClass:[PSHKCapturingHTTPURLResponse class]]) {
+		// We need to capture the data first!
+		[(PSHKCapturingHTTPURLResponse*)response captureDataWithRequest:[self request]];
+	}
+	
     if ([self.delegate respondsToSelector:@selector(connection:didReceiveResponse:)]) {
         [self.delegate connection:self didReceiveResponse:response];
     }
 
     if ([connections__ containsObject:self] && [self.delegate respondsToSelector:@selector(connection:didReceiveData:)]) {
-        [self.delegate connection:self didReceiveData:[[response body] dataUsingEncoding:NSUTF8StringEncoding]];
+        [self.delegate connection:self didReceiveData:[response body]];
     }
 
     if ([connections__ containsObject:self]) {
