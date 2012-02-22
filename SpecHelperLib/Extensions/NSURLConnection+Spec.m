@@ -1,16 +1,11 @@
 #import "NSURLConnection+Spec.h"
+#import <objc/runtime.h>
 #import "PSHKFakeHTTPURLResponse.h"
 #import "PSHKCapturingHTTPURLResponse.h"
-#import "objc/runtime.h"
+#import "Mocking/Utils.h"
 
 static char ASSOCIATED_REQUEST_KEY;
 static char ASSOCIATED_DELEGATE_KEY;
-
-@interface NSURLConnection ()
-
-- (id)specInitWithRequest:(NSURLRequest *)request delegate:(id)delegate startImmediately:(BOOL)startImmediately;
-
-@end
 
 @implementation NSURLConnection (Spec)
 
@@ -23,10 +18,11 @@ static NSMutableArray *connections__;
 + (void)initialize {
     connections__ = [[NSMutableArray alloc] init];
 	
-	// Exchange the original method
-	Method originalMethod = class_getInstanceMethod([self class], @selector(initWithRequest:delegate:startImmediately:));
-	Method newMethod = class_getInstanceMethod([self class], @selector(specInitWithRequest:delegate:startImmediately:));
-	method_exchangeImplementations(originalMethod, newMethod);
+	PSHKSwapMethods([self class], @selector(initWithRequest:delegate:), 
+					@selector(specInitWithRequest:delegate:));
+	PSHKSwapMethods([self class], @selector(initWithRequest:delegate:startImmediately:), 
+					@selector(specInitWithRequest:delegate:startImmediately:));
+	PSHKSwapMethods([self class], @selector(cancel), @selector(specCancel));
 }
 
 + (NSArray *)connections {
@@ -37,7 +33,7 @@ static NSMutableArray *connections__;
     [connections__ removeAllObjects];
 }
 
-- (id)initWithRequest:(NSURLRequest *)request delegate:(id)delegate {
+- (id)specInitWithRequest:(NSURLRequest *)request delegate:(id)delegate {
     return [self initWithRequest:request delegate:delegate startImmediately:YES];
 }
 
@@ -68,7 +64,7 @@ static NSMutableArray *connections__;
     return [NSString stringWithFormat:@"<Test HTTP connection for request %@>", [self request]];
 }
 
-- (void)cancel {
+- (void)specCancel {
     [connections__ removeObject:self];
 }
 

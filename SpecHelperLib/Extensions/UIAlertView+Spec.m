@@ -1,8 +1,15 @@
 #import "UIAlertView+Spec.h"
+#import "Mocking/Utils.h"
 
 static UIAlertView *currentAlertView__;
 
 @implementation UIAlertView (Spec)
+
++ (void)initialize {
+	PSHKSwapMethods([self class], @selector(show), @selector(specShow));
+	PSHKSwapMethods([self class], @selector(dismissWithClickedButtonIndex:animated:), 
+					@selector(specDismissWithClickedButtonIndex:animated:));
+}
 
 + (void)afterEach {
     [self reset];
@@ -23,7 +30,7 @@ static UIAlertView *currentAlertView__;
 	currentAlertView__ = alertView;
 }
 
-- (void)show {
+- (void)specShow {
 	[UIAlertView setCurrentAlertView:self];
 }
 
@@ -31,7 +38,7 @@ static UIAlertView *currentAlertView__;
     return [UIAlertView currentAlertView] == self;
 }
 
-- (void)dismissWithClickedButtonIndex:(NSInteger)buttonIndex animated:(BOOL)animated {
+- (void)specDismissWithClickedButtonIndex:(NSInteger)buttonIndex animated:(BOOL)animated {
     [self.delegate alertView:self didDismissWithButtonIndex:buttonIndex];
 	[UIAlertView reset];
 }

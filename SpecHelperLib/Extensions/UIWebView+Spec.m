@@ -1,5 +1,6 @@
 #import "UIWebView+Spec.h"
-#import "objc/runtime.h"
+#import <objc/runtime.h>
+#import "Mocking/Utils.h"
 
 @interface UIWebViewAttributes : NSObject
 @property (nonatomic, assign) id<UIWebViewDelegate> delegate;
@@ -47,6 +48,15 @@ static char ASSOCIATED_ATTRIBUTES_KEY;
 
 @implementation UIWebView (Spec)
 
++ (void)initialize {
+	PSHKSwapMethods([self class], @selector(initWithCoder:), @selector(specInitWithCoder:));
+	PSHKSwapMethods([self class], @selector(loadRequest:), @selector(specLoadRequest:));
+	PSHKSwapMethods([self class], @selector(loadHTMLString:baseURL:), 
+					@selector(specLoadHTMLString:baseURL:));
+	PSHKSwapMethods([self class], @selector(stringByEvaluatingJavaScriptFromString:), 
+					@selector(specStringByEvaluatingJavaScriptFromString:));
+}
+
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         objc_setAssociatedObject(self, &ASSOCIATED_ATTRIBUTES_KEY, [[[UIWebViewAttributes alloc] init] autorelease], OBJC_ASSOCIATION_RETAIN);
@@ -54,7 +64,7 @@ static char ASSOCIATED_ATTRIBUTES_KEY;
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)decoder {
+- (id)specInitWithCoder:(NSCoder *)decoder {
     return [self initWithFrame:CGRectMake(0, 0, 0, 0)];
 }
 
@@ -112,18 +122,18 @@ static char ASSOCIATED_ATTRIBUTES_KEY;
 }
 
 #pragma mark Method overrides
-- (void)loadRequest:(NSURLRequest *)request {
+- (void)specLoadRequest:(NSURLRequest *)request {
     [self log:@"loadRequest: %@", request];
     [self loadRequest:request withNavigationType:UIWebViewNavigationTypeOther];
 }
 
-- (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL {
+- (void)specLoadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL {
     self.attributes.loadedHTMLString = string;
     self.attributes.loadedBaseURL = baseURL;
     [self log:@"loadHTMLString:%@ baseURL:%@", string, baseURL];
 }
 
-- (NSString *)stringByEvaluatingJavaScriptFromString:(NSString *)javaScript {
+- (NSString *)specStringByEvaluatingJavaScriptFromString:(NSString *)javaScript {
     [self.attributes.javaScripts addObject:javaScript];
     UIWebViewJavaScriptReturnBlock block = [self.attributes.returnValueBlocksByJavaScript objectForKey:javaScript];
     if (block) {

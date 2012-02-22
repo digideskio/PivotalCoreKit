@@ -4,7 +4,7 @@
 
 @property (nonatomic, assign, readwrite) int statusCode;
 @property (nonatomic, retain, readwrite) NSDictionary *allHeaderFields;
-@property (nonatomic, copy, readwrite) NSString *body;
+@property (nonatomic, copy, readwrite) NSData *body;
 
 @end
 
