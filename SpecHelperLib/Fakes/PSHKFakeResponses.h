@@ -21,5 +21,6 @@
 - (PSHKFakeHTTPURLResponse *)authenticationFailure;
 - (PSHKFakeHTTPURLResponse *)unprocessableEntity;
 - (PSHKFakeHTTPURLResponse *)serverError;
+- (PSHKFakeHTTPURLResponse *)conflict;
 
 @end

@@ -99,9 +99,14 @@ static BOOL gCaptureWhenMissing = NO;
     return [self responseForStatusCode:422];
 }
 
+- (PSHKFakeHTTPURLResponse *)conflict {
+    return [self responseForStatusCode:409];
+}
+
 - (PSHKFakeHTTPURLResponse *)serverError {
     return [self responseForStatusCode:500];
 }
+
 
 #pragma mark Private interface
 

@@ -1,9 +1,9 @@
 #import "UIAlertView+Spec.h"
 #import "Mocking/Utils.h"
 
-static UIAlertView *currentAlertView__;
-
 @implementation UIAlertView (Spec)
+
+static UIAlertView *currentAlertView__;
 
 + (void)initialize {
 	PSHKSwapMethods([self class], @selector(show), @selector(specShow));

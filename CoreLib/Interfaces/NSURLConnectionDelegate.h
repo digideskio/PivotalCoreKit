@@ -1,8 +1,8 @@
 #import <Foundation/Foundation.h>
 
-// NSURLConnectionDelegate exists in iOS5 and 10.7, but not in 10.6.
 #ifdef __MAC_OS_X_VERSION_MAX_ALLOWED
 #if __MAC_OS_X_VERSION_MAX_ALLOWED < 1070
+// NSURLConnectionDelegate exists in iOS5 and 10.7, but not in 10.6.
 
 @protocol NSURLConnectionDelegate <NSObject>
 @optional
@@ -15,7 +15,13 @@
 - (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
 - (void)connection:(NSURLConnection *)connection didCancelAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
 
-// Methods in NSURLConnectionDataDelegate starting in 10.7/iOS5
+@end
+
+#endif
+//NSURLConnectionDataDelegate and NSURLConnectionDownloadDelegate only exist in iOS5 and must be declared for 10.6 and 10.7
+
+@protocol NSURLConnectionDataDelegate <NSURLConnectionDelegate>
+@optional
 - (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response;
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response;
 
@@ -31,5 +37,13 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite;
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection;
 @end
 
-#endif
+@protocol NSURLConnectionDownloadDelegate <NSURLConnectionDelegate>
+@optional
+- (void)connection:(NSURLConnection *)connection didWriteData:(long long)bytesWritten totalBytesWritten:(long long)totalBytesWritten expectedTotalBytes:(long long) expectedTotalBytes;
+- (void)connectionDidResumeDownloading:(NSURLConnection *)connection totalBytesWritten:(long long)totalBytesWritten expectedTotalBytes:(long long) expectedTotalBytes;
+
+@required
+- (void)connectionDidFinishDownloading:(NSURLConnection *)connection destinationURL:(NSURL *) destinationURL;
+@end
+
 #endif

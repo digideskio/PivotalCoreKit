@@ -5,6 +5,7 @@
 @interface NSURLConnection (Spec)
 
 + (NSArray *)connections;
++ (NSURLConnection *)connectionForPath:(NSString *)path;
 + (void)resetAll;
 
 // This allows making a real http request (used for capturing responses)

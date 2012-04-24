@@ -1,3 +1,5 @@
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
 #import "NSURLConnection+Spec.h"
 #import <objc/runtime.h>
 #import "PSHKFakeHTTPURLResponse.h"
@@ -27,6 +29,15 @@ static NSMutableArray *connections__;
 
 + (NSArray *)connections {
     return connections__;
+}
+
++ (NSURLConnection *)connectionForPath:(NSString *)path {
+    for (NSURLConnection *connection in connections__) {
+        if ([connection.request.URL.path isEqualToString:path]) {
+            return connection;
+        }
+    }
+    return nil;
 }
 
 + (void)resetAll {
