@@ -1,5 +1,5 @@
 #import "UIAlertView+Spec.h"
-#import "Mocking/Utils.h"
+#import "Utils.h"
 
 @implementation UIAlertView (Spec)
 

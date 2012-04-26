@@ -4,7 +4,7 @@
 #import <objc/runtime.h>
 #import "PSHKFakeHTTPURLResponse.h"
 #import "PSHKCapturingHTTPURLResponse.h"
-#import "Mocking/Utils.h"
+#import "Utils.h"
 
 static char ASSOCIATED_REQUEST_KEY;
 static char ASSOCIATED_DELEGATE_KEY;

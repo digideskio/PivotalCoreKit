@@ -1,6 +1,6 @@
 #import "UIWebView+Spec.h"
 #import <objc/runtime.h>
-#import "Mocking/Utils.h"
+#import "Utils.h"
 
 @interface UIWebViewAttributes : NSObject
 @property (nonatomic, assign) id<UIWebViewDelegate> delegate;
