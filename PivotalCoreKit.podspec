@@ -9,7 +9,8 @@ Pod::Spec.new do |s|
   s.platform = :ios
   
   # Workaround for a CocoaPods bug. It deletes everything at the root!
-  s.preserve_paths = 'CoreLib', 'UICoreLib', 'SpecHelperLib'
+  # Is it still necessary?
+  # s.preserve_paths = 'CoreLib', 'UICoreLib', 'SpecHelperLib'
 
   s.subspec 'CoreLib' do |core|
     # core.summary      = 'Shared production code.'
